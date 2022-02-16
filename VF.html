@@ -1,0 +1,45 @@
+<apex:page controller="Vlog_wordTreeCtrl" >
+    <apex:form >
+        <html>
+            <head>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js">
+                </script>
+             	<script type="text/javascript">
+                    google.charts.load('current', {'packages':['wordtree']});
+                google.charts.setOnLoadCallback(drawChart);
+                
+                var Name = '{!Name}';
+                Name = Name.replace("[","");
+                Name = Name.replace("]","");
+                var NameArr=Name.split(',');
+                
+                function drawChart() {
+                    
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Phrases');
+                    for (var i = 0; i < NameArr.length; i++) {
+                        data.addRow([NameArr[i]]);
+                    } 
+                    
+                    var options = {
+                        wordtree: {
+                            format: 'implicit',
+                            word: 'cats'
+                        }
+                    };
+                    
+                    var chart = new google.visualization.WordTree(document.getElementById('chart_div'));
+                    
+                    chart.draw(data, options);
+                }
+                </script>
+            </head>
+            <body>
+                
+                <div id="chart_div"></div>
+            </body>
+        </html>
+    </apex:form>
+</apex:page>
+
+
